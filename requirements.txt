@@ -1,0 +1,15 @@
+# Core dependencies
+requests>=2.31.0
+python-dotenv>=1.0.0
+fastapi>=0.104.0
+uvicorn>=0.24.0
+
+# Voice and telephony integrations
+vapi-python>=0.1.0
+twilio>=8.10.0
+
+# ServiceNow integration
+pysnow>=0.7.16
+
+# Additional utilities
+pydantic>=2.5.0
