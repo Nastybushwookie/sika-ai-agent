@@ -1,0 +1,39 @@
+# Configuration for Sika Corp AI Agent
+
+environment: development
+
+# ServiceNow Integration
+servicenow:
+  base_url: "https://sikanow.sika.com"
+  client_id: "${SNOW_CLIENT_ID}"
+  client_secret: "${SNOW_CLIENT_SECRET}"
+  integration_account: "vapi_incident_bot"
+
+# Telephony Configuration
+telephony:
+  # Supported providers: 'ringcentral', 'twilio', 'vapi_ai'
+  provider_type: "ringcentral"
+  
+  ringcentral:
+    client_id: "${RC_CLIENT_ID}"
+    client_secret: "${RC_CLIENT_SECRET}"
+    username: "${RC_USERNAME}"
+    extension: "${RC_EXTENSION}"
+    password: "${RC_PASSWORD}"
+    server: "https://platform.ringcentral.com"
+    phone_number: "${RC_PHONE_NUMBER}"
+    
+  twilio:
+    account_sid: "${TWILIO_ACCOUNT_SID}"
+    auth_token: "${TWILIO_AUTH_TOKEN}"
+    phone_number: "${TWILIO_PHONE_NUMBER}"
+    
+  vapi_ai:
+    api_key: "${VAPI_API_KEY}"
+    assistant_id: "${VAPI_ASSISTANT_ID}"
+
+# Webhook Configuration
+webhooks:
+  base_url: "https://api.yourcompany.com"
+  vapi_webhook_path: "/vapi/webhook"
+  twilio_webhook_path: "/twilio/webhook"

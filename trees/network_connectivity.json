@@ -1,0 +1,73 @@
+{
+  "issue_type": "network_connectivity",
+  "root_node": {
+    "id": "net_start",
+    "question": "Can you access the internet right now?",
+    "options": [
+      {"text": "Yes, I can browse websites", "next_node": "internal_access_check"},
+      {"text": "No, I cannot access anything", "next_node": "external_connectivity_diagnostic"}
+    ]
+  },
+  "internal_access_check": {
+    "id": "internal_access_check",
+    "question": "Can you access internal websites like SharePoint or ServiceNow?",
+    "options": [
+      {"text": "Yes, internal sites work fine", "next_node": "specific_app_issue"},
+      {"text": "No, I cannot access internal sites either", "next_node": "internal_network_diagnostic"}
+    ]
+  },
+  "external_connectivity_diagnostic": {
+    "id": "ext_diag_start",
+    "question": "What error message are you seeing?",
+    "options": [
+      {"text": "DNS resolution failed", 
+       "resolution": {"message": "Try flushing your DNS cache: ipconfig /flushdns on Windows or sudo dscacheutil -flushcache on Mac."}},
+      {"text": "Connection timeout", 
+       "resolution": {"message": "Check if you're connected to the correct WiFi network. Try restarting your router and modem, then wait 2 minutes before trying again."}},
+      {"text": "No error, just slow", 
+       "next_node": "speed_test_diagnostic"}
+    ]
+  },
+  "speed_test_diagnostic": {
+    "id": "speed_start",
+    "question": "Are you using Ethernet or WiFi?",
+    "options": [
+      {"text": "Ethernet", 
+       "resolution": {"message": "Try a different ethernet cable. If the problem persists, contact your network team — there may be a switch port issue."}},
+      {"text": "WiFi", 
+       "next_node": "wifi_signal_check"}
+    ]
+  },
+  "wifi_signal_check": {
+    "id": "wifi_start",
+    "question": "How far are you from the access point?",
+    "options": [
+      {"text": "Close (same room)", 
+       "resolution": {"message": "Try connecting to a different WiFi network if available. If all networks are slow, there may be an AP issue — contact your network team."}},
+      {"text": "Far away", 
+       "resolution": {"message": "Move closer to the access point or connect via ethernet if possible. Signal strength significantly impacts performance at distance."}}
+    ]
+  },
+  "specific_app_issue": {
+    "id": "app_issue_start",
+    "question": "Which specific application are you having trouble with?",
+    "options": [
+      {"text": "Email or Outlook", 
+       "next_node": "email_diagnostic"},
+      {"text": "VPN", 
+       "next_node": "vpn_diagnostic"},
+      {"text": "Other application", 
+       "resolution": {"message": "Please specify the application name so I can provide targeted assistance."}}
+    ]
+  },
+  "internal_network_diagnostic": {
+    "id": "int_net_diag_start",
+    "question": "Have you tried restarting your computer and network adapter?",
+    "options": [
+      {"text": "Yes, I've already restarted", 
+       "resolution": {"message": "Since internal networks are also affected, please contact the IT helpdesk for further assistance with potential network outages."}},
+      {"text": "No, I haven't tried that yet", 
+       "resolution": {"message": "Please restart your computer and try again. If the issue persists after restart, contact the IT helpdesk."}}
+    ]
+  }
+}
