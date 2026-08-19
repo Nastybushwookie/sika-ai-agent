@@ -51,3 +51,13 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Binary files that should not be in git
+*.exe
+*.zip
+*.dll
+*.so
+*.dylib
+
+# Salesforce token storage
+.data/sf_tokens.json

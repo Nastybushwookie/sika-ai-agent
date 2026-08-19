@@ -37,3 +37,10 @@ webhooks:
   base_url: "https://api.yourcompany.com"
   vapi_webhook_path: "/vapi/webhook"
   twilio_webhook_path: "/twilio/webhook"
+
+# Salesforce Integration (Sika Corp AI Agent)
+salesforce:
+  base_url: "https://login.salesforce.com"
+  client_id: "${SF_CLIENT_ID}"
+  client_secret: "${SF_CLIENT_SECRET}"
+  token_file: null

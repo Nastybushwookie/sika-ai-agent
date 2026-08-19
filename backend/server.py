@@ -3,7 +3,11 @@ Sika Corp AI Agent FastAPI Backend Server
 Handles webhooks from Vapi.ai, telephony providers, and ServiceNow integrations
 """
 from fastapi import FastAPI, HTTPException, Request, Header, Body
-from fastapi.responses import JSONResponse, XMLResponse
+from fastapi.responses import JSONResponse
+try:
+    from fastapi.responses import XMLResponse
+except ImportError:
+    from fastapi.responses import HTMLResponse as XMLResponse
 import httpx
 import yaml
 import os
@@ -11,13 +15,27 @@ import json
 from typing import Dict, Any, Optional
 from datetime import datetime
 
-# Import components
-from .decision_tree_engine import DecisionTreeEngine
-from ..integrations.snow_oauth_client import SnowOAuthClient
-from ..telephony.interface import TelephonyAdapterFactory
-from ..scripts.hr_status_verification import verify_employee_active_service_now
-from ..scripts.rate_limit_checker import check_rate_limit, check_rate_limit_webhook
-from ..scripts.password_reset_logger import log_password_reset_attempt
+# Import components — use correct paths for project structure
+import sys
+import os
+
+# Add both project root and backend directory to path
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+backend_dir = os.path.dirname(os.path.abspath(__file__))
+
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+if backend_dir not in sys.path:
+    sys.path.insert(0, backend_dir)
+
+# decision_tree_engine is in the backend directory, so import it with its full path
+from backend.decision_tree_engine import DecisionTreeEngine
+from integrations.snow_oauth_client import SnowOAuthClient
+from backend.webhooks.sf_webhook import router as sf_webhook_router
+from telephony.interface import TelephonyAdapterFactory
+from scripts.hr_status_verification import verify_employee_active_service_now
+from scripts.rate_limit_checker import check_rate_limit, check_rate_limit_webhook
+from scripts.password_reset_logger import log_password_reset_attempt
 
 app = FastAPI(
     title="Sika Corp AI Agent Backend",
@@ -361,3 +379,7 @@ async def create_incident_endpoint(request: Request):
     except Exception as e:
         print(f"[Incident Creation Error]: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to create incident: {str(e)}")
+
+
+# ── Salesforce Webhook Router (mounted at end) ───────────────────
+app.include_router(sf_webhook_router)

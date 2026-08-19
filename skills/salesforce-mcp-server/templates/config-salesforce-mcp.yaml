@@ -1,0 +1,18 @@
+# MCP Servers — Salesforce DX MCP
+# Copy this block into ~/.hermes/config.yaml under mcp_servers:
+# IMPORTANT: Replace <YOUR_ORG_ALIAS> with your actual org alias from `sf org list`
+# Do NOT leave DEFAULT_TARGET_ORG — it is a placeholder, not a real value.
+
+mcp_servers:
+  sf:
+    command: npx
+    args:
+      - -y
+      - '@salesforce/mcp'
+      - --orgs
+      - <YOUR_ORG_ALIAS>
+      - --toolsets
+      - all
+      - --allow-non-ga-tools
+    timeout: 180
+    connect_timeout: 60
