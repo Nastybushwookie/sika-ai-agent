@@ -1,0 +1,3 @@
+[submodule "sf-mcp-official"]
+	path = sf-mcp-official
+	url = https://github.com/salesforcecli/mcp.git
